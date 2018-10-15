@@ -21,7 +21,7 @@ export default class extends React.Component {
   render() {
     const { isExploring } = this.state;
     return (
-      <div className="container">
+      <div className="container card">
         <h1 className="user__title">Flopi</h1>
         <div className="card">
           <div className="card__title">Caracteristicas</div>
@@ -41,19 +41,16 @@ export default class extends React.Component {
         <div className="card">
           <div className="card__title">Acciones</div>
           <div className="card__content">
-            <ActionWithCountdown delay={5000} buttonLabel="Start exploring" />
+            <div className="col no-margin">
+              <div className="row-5">
+                <ActionWithCountdown
+                  delay={5000}
+                  buttonLabel="Start exploring"
+                />
+              </div>
+            </div>
           </div>
         </div>
-        <style jsx>{`
-          .container {
-            margin: auto;
-            width: 50%;
-          }
-
-          .user__title {
-            text-align: center;
-          }
-        `}</style>
       </div>
     );
   }
