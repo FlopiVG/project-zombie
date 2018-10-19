@@ -8,7 +8,12 @@ export class HomePage {
   }
 
   getUserTitle() {
-    console.log(this.wrapper.get(".user__title"));
     return this.wrapper.get(".user__title");
+  }
+
+  clickStartExploring() {
+    const button = this.wrapper.contains("Start exploring");
+    button.click();
+    return button;
   }
 }

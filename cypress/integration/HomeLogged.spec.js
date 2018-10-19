@@ -9,6 +9,10 @@ describe("Home page with logged user", () => {
   });
 
   it("should display the correct username title", () => {
-    homePage.getUserTitle().should("contain", "Flopi");
+    homePage.getUserTitle().contains("Flopi");
+  });
+
+  it("should disable button if start exploring", () => {
+    homePage.clickStartExploring().should("have.attr", "disabled");
   });
 });

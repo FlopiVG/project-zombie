@@ -7,8 +7,16 @@ export default class extends React.Component {
     actionRemainDate: 0
   };
 
+  componentWillMount() {
+    const { start, finish } = this.props;
+
+    if (finish > start) this.handleStart();
+  }
+
   handleStart = () => {
-    this.setState({ isActioning: true, actionStartDate: Date.now() });
+    const { start } = this.props;
+
+    this.setState({ isActioning: true, actionStartDate: start });
 
     this.actionInterval = setInterval(this.tick, 300);
   };
@@ -24,11 +32,11 @@ export default class extends React.Component {
   };
 
   tick = () => {
-    const { delay } = this.props;
+    const { start, finish } = this.props;
     const { actionStartDate } = this.state;
 
-    const actionRemainDate = actionStartDate - Date.now() + delay;
-
+    const actionRemainDate = finish - start;
+    console.log("hola");
     if (actionRemainDate <= 0) this.handleStop();
     else {
       this.setState({
