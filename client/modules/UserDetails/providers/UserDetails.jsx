@@ -32,8 +32,22 @@ export default class extends Component {
     });
   }
 
+  startAction = action => {
+    const { actions } = this.state;
+
+    UserDetails.startAction(action).then(data => {
+      this.setState({ actions: { ...actions, data } });
+    });
+  };
+
   render() {
-    return <Provider value={{ ...this.state }}>{this.props.children}</Provider>;
+    const { startAction } = this;
+
+    return (
+      <Provider value={{ ...this.state, startAction }}>
+        {this.props.children}
+      </Provider>
+    );
   }
 }
 

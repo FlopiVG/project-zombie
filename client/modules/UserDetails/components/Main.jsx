@@ -7,7 +7,7 @@ export default class extends Component {
     return (
       <UserDetailsProvider>
         <Context>
-          {({ name, stats, actions, fetched }) =>
+          {({ name, stats, actions, fetched, startAction }) =>
             fetched && (
               <>
                 <h1 className="user__title">{name}</h1>
@@ -38,8 +38,9 @@ export default class extends Component {
                     <div className="col no-margin">
                       <div className="row-5">
                         <ActionWithCountdown
-                          delay={5000}
-                          start={actions.exploring.starting}
+                          start={actions.exploring.start}
+                          action="exploring"
+                          handleStart={startAction}
                           finish={actions.exploring.finish}
                           buttonLabel="Start exploring"
                         />

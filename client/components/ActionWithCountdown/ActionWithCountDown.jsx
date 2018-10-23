@@ -3,44 +3,47 @@ export default class extends React.Component {
 
   state = {
     isActioning: false,
-    actionStartDate: 0,
-    actionRemainDate: 0
+    remainingDate: 0
   };
 
-  componentWillMount() {
+  componentDidMount() {
     const { start, finish } = this.props;
 
-    if (finish > start) this.handleStart();
+    if (finish > start) {
+      this.setState({ isActioning: true });
+      this.actionInterval = setInterval(this.tick, 300);
+    }
   }
 
-  handleStart = () => {
-    const { start } = this.props;
+  handleStart = async () => {
+    const { action, handleStart, finish } = this.props;
+    const now = Date.now();
 
-    this.setState({ isActioning: true, actionStartDate: start });
+    if (now < finish) return;
+
+    await handleStart(action);
+
+    this.setState({ isActioning: true });
 
     this.actionInterval = setInterval(this.tick, 300);
   };
 
   handleStop = () => {
     this.setState({
-      isActioning: false,
-      actionStartDate: 0,
-      actionRemainDate: 0
+      isActioning: false
     });
 
     clearInterval(this.actionInterval);
   };
 
   tick = () => {
-    const { start, finish } = this.props;
-    const { actionStartDate } = this.state;
+    const { finish } = this.props;
+    const now = Date.now();
 
-    const actionRemainDate = finish - start;
-    console.log("hola");
-    if (actionRemainDate <= 0) this.handleStop();
+    if (now > finish) this.handleStop();
     else {
       this.setState({
-        actionRemainDate
+        remainingDate: finish - now
       });
     }
   };
@@ -50,8 +53,9 @@ export default class extends React.Component {
   }
 
   render() {
-    const { isActioning, actionRemainDate } = this.state;
     const { buttonLabel } = this.props;
+    const { isActioning, remainingDate } = this.state;
+
     return (
       <div className="col">
         <div className="row-4">
@@ -60,10 +64,10 @@ export default class extends React.Component {
           </button>
         </div>
         {isActioning &&
-          !!actionRemainDate && (
+          !!remainingDate && (
             <>
               <div className="row-4 pull-center">
-                <span>{Math.floor(actionRemainDate / 1000)}</span>
+                <span>{remainingDate}</span>
               </div>
               <div className="row-4 pull-rigth">
                 <button onClick={this.handleStop}>Cancel</button>

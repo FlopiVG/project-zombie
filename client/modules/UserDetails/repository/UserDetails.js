@@ -19,4 +19,15 @@ export class UserDetails {
       }
     });
   }
+
+  static startAction(action) {
+    const now = Date.now();
+
+    return Promise.resolve({
+      [action]: {
+        start: now,
+        finish: now + 1000
+      }
+    });
+  }
 }
