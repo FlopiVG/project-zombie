@@ -19,7 +19,7 @@ export default class extends Component {
     actions: {}
   };
 
-  componentWillMount() {
+  componentDidMount() {
     this.setState({ loading: true });
     UserDetails.getUserDetails().then(({ name, stats, actions }) => {
       this.setState({
@@ -34,9 +34,9 @@ export default class extends Component {
 
   startAction = action => {
     const { actions } = this.state;
-
+    this.setState({ loading: true });
     UserDetails.startAction(action).then(data => {
-      this.setState({ actions: { ...actions, data } });
+      this.setState({ actions: { ...actions, data, loading: false } });
     });
   };
 
