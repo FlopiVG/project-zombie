@@ -4,7 +4,7 @@ import { UserDetails } from "../repository/UserDetails";
 const { Provider, Consumer } = createContext();
 
 export default class extends Component {
-  static = {
+  state = {
     fetched: false,
     loading: false,
     name: "",
@@ -32,17 +32,16 @@ export default class extends Component {
     });
   }
 
-  startAction = action => {
+  startAction = async action => {
     const { actions } = this.state;
     this.setState({ loading: true });
-    UserDetails.startAction(action).then(data => {
-      this.setState({ actions: { ...actions, data, loading: false } });
-    });
+
+    const data = await UserDetails.startAction(action);
+    this.setState({ actions: { ...actions, ...data }, loading: false });
   };
 
   render() {
     const { startAction } = this;
-
     return (
       <Provider value={{ ...this.state, startAction }}>
         {this.props.children}

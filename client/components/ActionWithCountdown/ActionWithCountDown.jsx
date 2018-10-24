@@ -3,6 +3,7 @@ export default class extends React.Component {
 
   state = {
     isActioning: false,
+    loading: false,
     remainingDate: 0
   };
 
@@ -21,16 +22,16 @@ export default class extends React.Component {
 
     if (now < finish) return;
 
+    this.setState({ loading: true });
     await handleStart(action);
-
-    this.setState({ isActioning: true });
-
+    this.setState({ isActioning: true, loading: false });
     this.actionInterval = setInterval(this.tick, 300);
   };
 
   handleStop = () => {
     this.setState({
-      isActioning: false
+      isActioning: false,
+      remainingDate: 0
     });
 
     clearInterval(this.actionInterval);
@@ -54,14 +55,15 @@ export default class extends React.Component {
 
   render() {
     const { buttonLabel } = this.props;
-    const { isActioning, remainingDate } = this.state;
+    const { isActioning, remainingDate, loading } = this.state;
 
     return (
       <div className="col">
         <div className="row-4">
-          <button onClick={this.handleStart} disabled={isActioning}>
+          <button onClick={this.handleStart} disabled={isActioning || loading}>
             {buttonLabel}
           </button>
+          {loading && <span>Loading...</span>}
         </div>
         {isActioning &&
           !!remainingDate && (

@@ -33,7 +33,7 @@ export class UserDetails {
         resolve({
           [action]: {
             start: now,
-            finish: now + 1000
+            finish: now + 10000
           }
         });
       }, 2000);
