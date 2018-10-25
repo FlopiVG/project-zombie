@@ -45,7 +45,6 @@ export default class extends Component {
 
     this.setState({ loading: true });
     const data = await UserDetails.cancelAction(action);
-    console.log(data);
     this.setState({ actions: { ...actions, ...data }, loading: false });
   };
 

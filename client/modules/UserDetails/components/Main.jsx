@@ -1,6 +1,6 @@
 import { Component } from "react";
 import UserDetailsProvider, { Context } from "../providers/UserDetails";
-import ActionWithCountdown from "../../../components/ActionWithCountdown";
+import CountDown from "../../../components/CountDown";
 
 export default class extends Component {
   render() {
@@ -37,7 +37,7 @@ export default class extends Component {
                   <div className="card__content">
                     <div className="col no-margin">
                       <div className="row-5">
-                        <ActionWithCountdown
+                        <CountDown
                           start={actions.exploring.start}
                           action="exploring"
                           handleStart={startAction}
