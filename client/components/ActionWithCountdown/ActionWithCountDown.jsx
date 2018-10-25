@@ -28,10 +28,17 @@ export default class extends React.Component {
     this.actionInterval = setInterval(this.tick, 300);
   };
 
-  handleStop = () => {
+  handleStop = async isCancel => {
+    const { handleCancel, action } = this.props;
+
+    this.setState({ loading: true });
+
+    if (isCancel) await handleCancel(action);
+
     this.setState({
       isActioning: false,
-      remainingDate: 0
+      remainingDate: 0,
+      loading: false
     });
 
     clearInterval(this.actionInterval);
@@ -69,10 +76,12 @@ export default class extends React.Component {
           !!remainingDate && (
             <>
               <div className="row-4 pull-center">
-                <span>{remainingDate}</span>
+                {!loading && <span>{remainingDate}</span>}
               </div>
               <div className="row-4 pull-rigth">
-                <button onClick={this.handleStop}>Cancel</button>
+                <button onClick={this.handleStop} disabled={loading}>
+                  Cancel
+                </button>
               </div>
             </>
           )}

@@ -34,16 +34,25 @@ export default class extends Component {
 
   startAction = async action => {
     const { actions } = this.state;
-    this.setState({ loading: true });
 
+    this.setState({ loading: true });
     const data = await UserDetails.startAction(action);
     this.setState({ actions: { ...actions, ...data }, loading: false });
   };
 
+  cancelAction = async action => {
+    const { actions } = this.state;
+
+    this.setState({ loading: true });
+    const data = await UserDetails.cancelAction(action);
+    console.log(data);
+    this.setState({ actions: { ...actions, ...data }, loading: false });
+  };
+
   render() {
-    const { startAction } = this;
+    const { startAction, cancelAction } = this;
     return (
-      <Provider value={{ ...this.state, startAction }}>
+      <Provider value={{ ...this.state, startAction, cancelAction }}>
         {this.props.children}
       </Provider>
     );

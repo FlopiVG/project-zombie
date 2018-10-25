@@ -39,4 +39,14 @@ export class UserDetails {
       }, 2000);
     });
   }
+
+  static cancelAction(action) {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve({
+          [action]: { start: 0, finish: 0 }
+        });
+      }, 2000);
+    });
+  }
 }

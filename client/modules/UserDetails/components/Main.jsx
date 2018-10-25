@@ -7,7 +7,7 @@ export default class extends Component {
     return (
       <UserDetailsProvider>
         <Context>
-          {({ name, stats, actions, fetched, startAction }) =>
+          {({ name, stats, actions, fetched, startAction, cancelAction }) =>
             fetched && (
               <>
                 <h1 className="user__title">{name}</h1>
@@ -41,6 +41,7 @@ export default class extends Component {
                           start={actions.exploring.start}
                           action="exploring"
                           handleStart={startAction}
+                          handleCancel={cancelAction}
                           finish={actions.exploring.finish}
                           buttonLabel="Start exploring"
                         />
