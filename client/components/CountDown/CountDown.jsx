@@ -1,10 +1,13 @@
+import Button from "../Button";
+
 export default class extends React.Component {
   actionInterval = 0;
 
   state = {
     isActioning: false,
-    loading: false,
-    remainingDate: 0
+    remainingDate: 0,
+    actionLoading: false,
+    cancelLoading: false
   };
 
   componentDidMount() {
@@ -22,23 +25,23 @@ export default class extends React.Component {
 
     if (now < finish) return;
 
-    this.setState({ loading: true });
+    this.setState({ actionLoading: true });
     await handleStart(action);
-    this.setState({ isActioning: true, loading: false });
+    this.setState({ isActioning: true, actionLoading: false });
     this.actionInterval = setInterval(this.tick, 300);
   };
 
   handleStop = async isCancel => {
     const { handleCancel, action } = this.props;
 
-    this.setState({ loading: true });
+    this.setState({ cancelLoading: true });
 
     if (isCancel) await handleCancel(action);
 
     this.setState({
       isActioning: false,
       remainingDate: 0,
-      loading: false
+      cancelLoading: false
     });
 
     clearInterval(this.actionInterval);
@@ -62,26 +65,38 @@ export default class extends React.Component {
 
   render() {
     const { buttonLabel } = this.props;
-    const { isActioning, remainingDate, loading } = this.state;
+    const {
+      isActioning,
+      remainingDate,
+      actionLoading,
+      cancelLoading
+    } = this.state;
 
     return (
       <div className="col">
         <div className="row-4">
-          <button onClick={this.handleStart} disabled={isActioning || loading}>
+          <Button
+            onClick={this.handleStart}
+            disabled={isActioning || actionLoading || cancelLoading}
+            isLoading={actionLoading}
+          >
             {buttonLabel}
-          </button>
-          {loading && <span>Loading...</span>}
+          </Button>
         </div>
         {isActioning &&
           !!remainingDate && (
             <>
               <div className="row-4 pull-center">
-                {!loading && <span>{remainingDate}</span>}
+                {!actionLoading && <span>{remainingDate}</span>}
               </div>
               <div className="row-4 pull-rigth">
-                <button onClick={this.handleStop} disabled={loading}>
+                <Button
+                  onClick={this.handleStop}
+                  disabled={cancelLoading}
+                  isLoading={cancelLoading}
+                >
                   Cancel
-                </button>
+                </Button>
               </div>
             </>
           )}

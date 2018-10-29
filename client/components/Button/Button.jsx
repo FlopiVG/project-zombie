@@ -11,8 +11,8 @@ const Button = styled.button`
   }
 `;
 
-export default ({ children, isLoading }) => (
-  <Button>
+export default ({ children, isLoading, ...rest }) => (
+  <Button {...rest}>
     {isLoading && <Spinner />}
     <span>{children}</span>
   </Button>
