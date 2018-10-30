@@ -1,5 +1,5 @@
 import { Component, createContext } from "react";
-import { UserDetails } from "../repository/UserDetails";
+import { UserDetails } from "../repository/UserDetails.repository";
 
 const { Provider, Consumer } = createContext();
 

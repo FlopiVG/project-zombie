@@ -1,5 +1,7 @@
 import { Component } from "react";
-import UserDetailsProvider, { Context } from "../providers/UserDetails";
+import UserDetailsProvider, {
+  Context
+} from "../providers/UserDetails.provider";
 import CountDown from "../../../components/CountDown";
 
 export default class extends Component {
