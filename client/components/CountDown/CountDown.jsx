@@ -20,6 +20,7 @@ export default class extends React.Component {
   }
 
   handleStart = async () => {
+    console.log("hola");
     const { action, handleStart, finish } = this.props;
     const now = Date.now();
 

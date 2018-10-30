@@ -1,12 +1,18 @@
 import React from "react";
 import CountDown from "./CountDown";
-import { render } from "react-testing-library";
+import { render, fireEvent } from "react-testing-library";
 
 describe("CountDown component", () => {
-  let component;
+  let component, props;
 
   beforeEach(() => {
-    component = render(<CountDown />);
+    props = {
+      buttonLabel: "foo",
+      handleStart: jest.fn(),
+      handleStop: jest.fn()
+    };
+
+    component = render(<CountDown {...props} />);
   });
 
   it("should render properly", () => {

@@ -6,7 +6,8 @@
   "scripts": {
     "start": "ts-node server",
     "e2e": "cypress open",
-    "test": "jest"
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "devDependencies": {
     "@types/node": "^10.12.0",
@@ -30,6 +31,7 @@
       "<rootDir>/client/.next/",
       "<rootDir>/node_modules/",
       "<rootDir>/cypress/"
-    ]
+    ],
+    "timers": "fake"
   }
 }
